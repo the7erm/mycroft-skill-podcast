@@ -18,6 +18,12 @@ This skill is based on the [Jupiter Broadcasting Skill](https://github.com/the7e
 mkdir -p ~/.mycroft/third_party_skills/
 cd ~/.mycroft/third_party_skills/
 git clone https://github.com/the7erm/mycroft-skill-podcast.git podcast
+cd podcast
+workon mycroft
+# if that doesn't work try `source <path to virtualenv/bin/activate>`
+pip install -r requirements.txt
+# restart mycroft
+./mycroft.sh restart
 ```
 
 ## Configuring `mycroft.ini`
