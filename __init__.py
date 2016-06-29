@@ -239,7 +239,10 @@ class PodcastSkill(MycroftSkill):
             if episode:
                 # Set default to the whatever the page's link is.
                 link = feed['href']
-                open_cmd = self.config.get("webpage_command", "xdg-open")
+                open_cmd = "xdg-open"
+                if self.config:
+                    open_cmd = self.config.get("webpage_command", "xdg-open")
+
 
                 if hasattr(episode, 'media_content') and \
                    episode.media_content:
