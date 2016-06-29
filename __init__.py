@@ -2,8 +2,8 @@
 #
 # Mycroft Podcast skill is free software: you can redistribute
 # it and/or modify it under the terms of the GNU General Public License as
-# published by the Free Software Foundation, either version 2 of the License, or
-# (at your option) any later version.
+# published by the Free Software Foundation, either version 2 of the License,
+# or (at your option) any later version.
 #
 # Mycroft Podcast is distributed in the hope that it will
 #  be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -32,10 +32,11 @@ __author__ = 'the7erm'
 
 LOGGER = getLogger(__name__)
 
+
 class FeedReader(object):
     def __init__(self, feed_filename, storage_path):
         super(FeedReader, self).__init__()
-        self.ttl = 60 * 60 # 60 minutes
+        self.ttl = 60 * 60  # 60 minutes
         self.feeds = {}
         self.feed_filename = feed_filename
         self.storage_path = storage_path
@@ -243,7 +244,6 @@ class PodcastSkill(MycroftSkill):
                 if self.config:
                     open_cmd = self.config.get("webpage_command", "xdg-open")
 
-
                 if hasattr(episode, 'media_content') and \
                    episode.media_content:
                         # This episode has media content.
@@ -268,7 +268,6 @@ class PodcastSkill(MycroftSkill):
                 subprocess.check_output(cmd)
                 LOGGER.debug("episode:%s" % pformat(episode))
         self.say_errors()
-
 
     def handle_latest_intent(self, message):
         self.latest_show(message, False)
