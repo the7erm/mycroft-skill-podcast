@@ -126,4 +126,4 @@ Also you can include your own alternate pronunciations.  EG: `LAS`, `L.A.S.`,
 The PodcastSkill will only fetch a podcast once per hour.
 `~/.mycroft/skills/PodcastSkill/feedcache` is the location of the cache file.
 
-In the event that the device you want your media to play/view isn't the same box as you run mycroft on you'll want to read [ssh how to](https://github.com/the7erm/mycroft-skill-podcast/blob/master/docs/how-to-ssh.md).
+In the event that the device you want your media to play/view isn't the same box as you run mycroft on you'll want to read [ssh how to](https://github.com/the7erm/mycroft-skill-podcast/blob/master/how-to/how-to-ssh.md).
