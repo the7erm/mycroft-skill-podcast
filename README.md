@@ -19,7 +19,7 @@ mkdir -p ~/.mycroft/third_party_skills/
 cd ~/.mycroft/third_party_skills/
 git clone https://github.com/the7erm/mycroft-skill-podcast.git podcast
 cd podcast
-workon mycroft
+source ~/.virtualenvs/mycroft/bin/activate
 # if that doesn't work try `source <path to virtualenv/bin/activate>`
 pip install -r requirements.txt
 # restart mycroft
