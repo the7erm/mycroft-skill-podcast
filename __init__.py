@@ -264,7 +264,11 @@ class PodcastSkill(MycroftSkill):
                 else:
                     link = episode.link
 
+                if not open_cmd:
+                    open_cmd = "xdg-open"
+
                 cmd = [open_cmd, link]
+                LOGGER.debug("running command:%s" % " ".join(cmd))
                 subprocess.check_output(cmd)
                 LOGGER.debug("episode:%s" % pformat(episode))
         self.say_errors()
