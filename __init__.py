@@ -160,6 +160,7 @@ class PodcastSkill(MycroftSkill):
 
     def initialize(self):
         self.showmap = {}
+        self.process = None
         self.feed_reader = FeedReader(
             join(self.file_system.path, "feeds.json"),
             join(self.file_system.path, 'feedcache')
@@ -246,6 +247,7 @@ class PodcastSkill(MycroftSkill):
 
                 if hasattr(episode, 'media_content') and \
                    episode.media_content:
+
                         # This episode has media content.
                         # In some cases people set the media_content
                         # to the same as the `link`.
@@ -255,21 +257,41 @@ class PodcastSkill(MycroftSkill):
                         if media:
                             # We're supposed to get the media url.
                             link = episode.media_content
+                            LOGGER.debug("MEDIA:%s" % link)
                             open_cmd = self.config.get("media_command",
                                                        open_cmd)
                         elif episode.media_content != episode.link:
                             # The media_content url is not the same
                             # so it's a webpage, for that episode.
                             link = episode.link
+                            LOGGER.debug("EPISODE LINK:%s" % link)
+
                 else:
                     link = episode.link
+
+                LOGGER.debug("TYPE:%s" % type(link))
+                if isinstance(link, list) and len(link) > 0 and \
+                   isinstance(link[0]['url'], dict):
+
+                        link = link[0]['url']
+
+                if not isinstance(link, (str,)):
+                    link = feed['href']
+                    open_cmd = self.config.get("webpage_command", "xdg-open")
 
                 if not open_cmd:
                     open_cmd = "xdg-open"
 
                 cmd = [open_cmd, link]
                 LOGGER.debug("running command:%s" % " ".join(cmd))
-                subprocess.check_output(cmd)
+                if self.process:
+                    res = self.process.poll()
+                    if res is None:
+                        self.process.kill()
+                    self.process = None
+
+                self.process = subprocess.Popen(cmd)
+
                 LOGGER.debug("episode:%s" % pformat(episode))
         self.say_errors()
 
