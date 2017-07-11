@@ -225,9 +225,12 @@ class PodcastSkill(MycroftSkill):
                 self.tokenize_show(tokenizer, phrase, entry)
 
     def latest_show(self, message, media=False):
-        show_name = message.metadata.get('Podcast')
-        entries = self.showmap.get(show_name)
         LOGGER.debug("message:%s" % message)
+        LOGGER.debug("MESSAGE:%s" % dir(message))
+        LOGGER.debug("message.data:%s" % message.data)
+        show_name = message.data.get('Podcast')
+        print("**** PODCAST *****", show_name)
+        entries = self.showmap.get(show_name)
         LOGGER.debug("latest entries:%s" % entries)
 
         if entries and len(entries) > 0:
@@ -258,8 +261,10 @@ class PodcastSkill(MycroftSkill):
                             # We're supposed to get the media url.
                             link = episode.media_content
                             LOGGER.debug("MEDIA:%s" % link)
-                            open_cmd = self.config.get("media_command",
-                                                       open_cmd)
+                            open_cmd = "xdg-open"
+                            if self.config:
+                                open_cmd = self.config.get("media_command",
+                                                           open_cmd)
                         elif episode.media_content != episode.link:
                             # The media_content url is not the same
                             # so it's a webpage, for that episode.
@@ -277,7 +282,9 @@ class PodcastSkill(MycroftSkill):
 
                 if not isinstance(link, (str,)):
                     link = feed['href']
-                    open_cmd = self.config.get("webpage_command", "xdg-open")
+                    open_cmd = "xdg-open"
+                    if self.config:
+                        open_cmd = self.config.get("webpage_command", "xdg-open")
 
                 if not open_cmd:
                     open_cmd = "xdg-open"
