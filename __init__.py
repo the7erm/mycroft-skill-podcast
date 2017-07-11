@@ -276,11 +276,10 @@ class PodcastSkill(MycroftSkill):
 
                 LOGGER.debug("TYPE:%s" % type(link))
                 if isinstance(link, list) and len(link) > 0 and \
-                   isinstance(link[0]['url'], dict):
-
+                   isinstance(link[0], dict):
                         link = link[0]['url']
 
-                if not isinstance(link, (str,)):
+                if not isinstance(link, (str, unicode)):
                     link = feed['href']
                     open_cmd = "xdg-open"
                     if self.config:
