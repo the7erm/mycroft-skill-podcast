@@ -15,31 +15,28 @@ This skill is based on the [Jupiter Broadcasting Skill](https://github.com/the7e
 
 ## Install
 ```
-mkdir -p ~/.mycroft/third_party_skills/
-cd ~/.mycroft/third_party_skills/
-git clone https://github.com/the7erm/mycroft-skill-podcast.git podcast
-cd podcast
-source ~/.virtualenvs/mycroft/bin/activate
+cd /opt/mycroft/skills
+git clone https://github.com/the7erm/mycroft-skill-podcast.git skill-podcast
+cd skill-podcast
+workon mycroft
 # if that doesn't work try `source <path to virtualenv/bin/activate>`
 pip install -r requirements.txt
 # restart mycroft
 ./mycroft.sh restart
 ```
 
-## Configuring `mycroft.ini`
+## Configuring `mycroft.conf`
 By default the `PodcastSkill` uses `xdg-open` to open media & webpages.
 Everyone has their favorite media player feel free to set it to `vlc` please
 note `vlc --flag` will not work.  You'll need to write a wrapper script that
 calls `vlc` with the command line arguments you'd like.
 
-`mycroft.ini` can be changed in either `/etc/mycroft/mycroft.ini` for system wide configuration or `$HOME/.mycroft/mycroft.ini` for a specific user.
 
-```ini
-[PodcastSkill]
-# Media player you want the PodcastSkill to use
-media_command = "xdg-open"
-# Browser you'd like the PodcastSkill to use
-webpage_command = "xdg-open"
+```json
+"PodcastSkill": {
+    "media_command": "vlc",
+    "webpage_command": "xdg-open"
+}
 ```
 
 ## `feeds.json`
